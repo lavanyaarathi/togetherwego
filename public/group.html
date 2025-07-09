@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Details - TogetherWeGo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Group Details</h1>
+        <nav>
+            <button id="backToDashboardBtn">Dashboard</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="groupDetails">
+            <h2 id="groupName">Group Name</h2>
+            <ul id="tripList">
+                <!-- Trips will be loaded here -->
+            </ul>
+            <button id="createTripBtn">Create New Trip</button>
+
+            <!-- Join Trip Form -->
+            <h3>Join Trip</h3>
+            <form id="joinTripForm">
+                <label for="tripDestination">Trip Destination:</label>
+                <input type="text" id="tripDestination" name="tripDestination" required>
+                <button type="submit">Join Trip</button>
+            </form>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TogetherWeGo</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const backToDashboardBtn = document.getElementById('backToDashboardBtn');
+            const createTripBtn = document.getElementById('createTripBtn');
+            const tripList = document.getElementById('tripList');
+            const groupNameHeader = document.getElementById('groupName');
+            const userId = localStorage.getItem('user_id');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const groupId = urlParams.get('groupId');
+
+            if (!groupId) {
+                document.body.innerHTML = '<h2>Error: Group ID not provided.</h2>';
+                return;
+            }
+
+            // Load Group Name
+            async function loadGroupName() {
+                try {
+                    const response = await fetch(`/groups/${groupId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'user-id': userId
+                        },
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        groupNameHeader.innerHTML = data.name;
+                    } else {
+                        alert(`Failed to load trips: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error loading groups:', error);
+                }
+            }
+
+            loadGroupName();
+
+            // Load Trips
+            async function loadTrips() {
+                try {
+                    const response = await fetch(`/groups/${groupId}/trips`);
+                    const trips = await response.json();
+
+                    if (response.ok) {
+                        if (trips.length > 0) {
+                            tripList.innerHTML = trips.map(trip => `
+                                <li class="trip-item" data-trip-id="${trip.trip_id}">
+                                    <strong>${trip.destination}</strong><br>
+                                    <span>${trip.start_date} - ${trip.end_date}</span>
+                                </li>
+                            `).join('');
+                        } else {
+                            tripList.innerHTML = `<p>No trips found for this group.</p>`;
+                        }
+
+                        // Add event listeners to trip items after loading
+                        addTripClickListeners();
+
+                    } else {
+                        tripList.innerHTML = `<p>Failed to load trips: ${trips.message}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error loading trips:', error);
+                    tripList.innerHTML = '<p>Error loading trips.</p>';
+                }
+            }
+
+            // Function to add click listeners to trip items
+            function addTripClickListeners() {
+                const tripItems = document.querySelectorAll('.trip-item');
+                tripItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const tripId = item.dataset.tripId;
+                        window.location.href = `/trip.html?tripId=${tripId}`;
+                    });
+                });
+            }
+
+            loadTrips();
+
+            // Event Listener for Create Trip
+            createTripBtn.addEventListener('click', () => {
+                const destination = prompt("Enter trip destination:");
+                const startDate = prompt("Enter start date (YYYY-MM-DD):");
+                const endDate = prompt("Enter end date (YYYY-MM-DD):");
+
+                if (destination && startDate && endDate) {
+                    createTrip(destination, startDate, endDate);
+                }
+            });
+
+            async function createTrip(destination, startDate, endDate) {
+                try {
+                    const response = await fetch(`/groups/${groupId}/trips`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            destination,
+                            start_date: startDate,
+                            end_date: endDate
+                        }),
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert(data.message);
+                        loadTrips(); // Reload trips after creating a new one
+                    } else {
+                        alert(`Failed to create trip: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error creating trip:', error);
+                    alert('Error creating trip.');
+                }
+            }
+
+            // Event Listener for Back to Dashboard
+            backToDashboardBtn.addEventListener('click', () => {
+                window.location.href = '/dashboard.html';
+            });
+
+            // Event listener for Join Trip form submission
+            document.getElementById('joinTripForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const tripDestination = document.getElementById('tripDestination').value;
+
+                try {
+                    const response = await fetch('/trips/join', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            tripDestination: tripDestination,
+                            userId: userId
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        // alert(data.message);
+                        // After joining, redirect to the trip page
+                        window.location.href = `/trip.html?tripId=${data.tripId}`;
+                    } else {
+                        alert(`Failed to join trip: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error joining trip:', error);
+                    alert('Error joining trip.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

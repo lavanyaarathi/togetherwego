@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Groups - TogetherWeGo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>My Groups</h1>
+        <nav>
+            <button id="logoutBtn">Logout</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboard">
+            <h2>My Groups</h2>
+            <button id="createGroupBtn">Create New Group</button>
+            <ul id="groupList">
+                <!-- Groups will be loaded here -->
+            </ul>
+
+            <!-- Join Group Form -->
+            <h3>Join Group</h3>
+            <form id="joinGroupForm">
+                <label for="groupName">Group Name:</label>
+                <input type="text" id="groupName" name="groupName" required>
+                <button type="submit">Join Group</button>
+            </form>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TogetherWeGo</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logoutBtn');
+            const createGroupBtn = document.getElementById('createGroupBtn');
+            const groupList = document.getElementById('groupList');
+            const userId = localStorage.getItem('user_id');
+
+            if (!userId) {
+                window.location.href = '/index.html';
+            }
+
+            // Load Groups
+            async function loadGroups() {
+                try {
+                    const response = await fetch('/groups', {
+                        headers: {
+                            'user-id': userId // Include user ID in the request headers
+                        }
+                    });
+                    const groups = await response.json();
+
+                    if (response.ok) {
+                        if (groups.length > 0) {
+                            groupList.innerHTML = groups.map(group => `
+                                <li><a href="/group.html?groupId=${group.group_id}">${group.name}</a></li>
+                            `).join('');
+                        } else {
+                            groupList.innerHTML = `<p>No groups found for this user.</p>`;
+                        }
+                    } else {
+                        groupList.innerHTML = `<p>Failed to load groups: ${groups.message}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error loading groups:', error);
+                    groupList.innerHTML = '<p>Error loading groups.</p>';
+                }
+            }
+
+            loadGroups();
+
+            // Event Listener for Create Group
+            createGroupBtn.addEventListener('click', () => {
+                const groupName = prompt("Enter the name of the new group:");
+                if (groupName) {
+                    createGroup(groupName);
+                }
+            });
+
+            async function createGroup(name) {
+                try {
+                    const response = await fetch('/groups', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            organizer_id: userId
+                        }),
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert(data.message);
+                        loadGroups(); // Reload groups after creating a new one
+                    } else {
+                        alert(`Failed to create group: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error creating group:', error);
+                    alert('Error creating group.');
+                }
+            }
+
+            // Event Listener for Logout
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('user_id');
+                window.location.href = '/index.html';
+            });
+
+            // Event listener for Join Group form submission
+            document.getElementById('joinGroupForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const groupName = document.getElementById('groupName').value;
+
+                try {
+                    const response = await fetch('/groups/join', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            groupName: groupName,
+                            userId: userId
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        alert(data.message);
+                        loadGroups(); // Reload groups after joining
+                    } else {
+                        alert(`Failed to join group: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error joining group:', error);
+                    alert('Error joining group.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

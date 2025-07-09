@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Details - TogetherWeGo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Trip Details</h1>
+        <nav>
+            <button id="backToGroupBtn">Group Details</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="tripDetails">
+            <h2 id="tripDestination">Trip Destination</h2>
+            <p>Dates: <span id="tripDates"></span></p>
+
+            <!-- Activities Section -->
+            <section id="activities">
+                <h3>Activities</h3>
+                <ul id="activityList">
+                    <!-- Activities will be loaded here -->
+                </ul>
+
+                <!-- Add Activity Form -->
+                <h4>Suggest Activity</h4>
+                <form id="addActivityForm">
+                    <label for="activityName">Activity Name:</label>
+                    <input type="text" id="activityName" name="activityName" required><br><br>
+
+                    <label for="activityCost">Estimated Cost:</label>
+                    <input type="number" id="activityCost" name="activityCost" required><br><br>
+
+                    <button type="submit">Suggest Activity</button>
+                </form>
+            </section>
+
+            <!-- Budget Section -->
+            <section id="budget">
+                <h3>Budget</h3>
+                <p>
+                    Total Budget: <span id="totalBudget"></span>
+                </p>
+                <p>
+                    Balance: <span id="budgetBalance"></span>
+                </p>
+                <h4>Set Budget</h4>
+                <form id="setBudgetForm">
+                    <label for="totalBudgetInput">Total Budget:</label>
+                    <input type="number" id="totalBudgetInput" name="totalBudgetInput" required><br><br>
+                    <button type="submit">Set Budget</button>
+                </form>
+            </section>
+
+            <!-- Expenses Section -->
+            <section id="expenses">
+                <h3>Expenses</h3>
+                <ul id="expensesList">
+                    <!-- Expenses will be loaded here -->
+                </ul>
+
+                <h4>Add Expense</h4>
+                <form id="addExpenseForm">
+                    <label for="expenseAmount">Amount:</label>
+                    <input type="number" id="expenseAmount" name="expenseAmount" required><br><br>
+
+                    <label for="expenseDescription">Description:</label>
+                    <input type="text" id="expenseDescription" name="expenseDescription" required><br><br>
+
+                    <button type="submit">Add Expense</button>
+                </form>
+            </section>
+
+            <!-- Itinerary Section -->
+            <section id="itinerary">
+                <h3>Itinerary</h3>
+                <ul id="itineraryList">
+                    <!-- Itinerary items will be loaded here -->
+                </ul>
+
+                <h4>Add Activity to Itinerary</h4>
+                <form id="addItineraryForm">
+                    <label for="activitySelect">Select Activity:</label>
+                    <select id="activitySelect" name="activitySelect" required>
+                        <!-- Activities will be loaded here -->
+                    </select><br><br>
+
+                    <label for="itineraryDate">Date:</label>
+                    <input type="date" id="itineraryDate" name="itineraryDate" required><br><br>
+
+                    <label for="itineraryTime">Time:</label>
+                    <input type="time" id="itineraryTime" name="itineraryTime" required><br><br>
+
+                    <button type="submit">Add to Itinerary</button>
+                </form>
+            </section>
+
+            <!-- Voting Section -->
+            <section id="voting">
+                <h3>Voting</h3>
+                <ul id="votingList">
+                    <!-- Voting options will be loaded here -->
+                </ul>
+
+                <h4>Add Voting Option</h4>
+                <form id="addVotingForm">
+                    <label for="optionType">Option Type:</label>
+                    <select id="optionType" name="optionType" required>
+                        <option value="destination">Destination</option>
+                        <option value="accommodation">Accommodation</option>
+                        <option value="activity">Activity</option>
+                    </select><br><br>
+
+                    <label for="optionValue">Option Value:</label>
+                    <input type="text" id="optionValue" name="optionValue" required><br><br>
+
+                    <button type="submit">Add Voting Option</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TogetherWeGo</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const backToGroupBtn = document.getElementById('backToGroupBtn');
+            const activityList = document.getElementById('activityList');
+            const tripDestinationHeader = document.getElementById('tripDestination');
+            const tripDatesSpan = document.getElementById('tripDates');
+            const userId = localStorage.getItem('user_id');
+            const itineraryList = document.getElementById('itineraryList'); // Get the itinerary list
+            const totalBudgetSpan = document.getElementById('totalBudget'); // Get the total budget span
+            const budgetBalanceSpan = document.getElementById('budgetBalance'); // Get the budget balance span
+            const expensesList = document.getElementById('expensesList'); // Get the expenses list
+            const activitySelect = document.getElementById('activitySelect'); // Get the activity select
+            const votingList = document.getElementById('votingList'); // Get the voting list
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const tripId = urlParams.get('tripId');
+
+            if (!tripId) {
+                document.body.innerHTML = '<h2>Error: Trip ID not provided.</h2>';
+                return;
+            }
+
+            // Load Trip Details
+            async function loadTripDetails() {
+                try {
+                    const response = await fetch(`/trips/${tripId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'user-id': userId
+                        },
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        tripDestinationHeader.innerHTML = data.destination;
+                        tripDatesSpan.innerHTML = data.start_date + " - " + data.end_date;
+                    } else {
+                        alert(`Failed to load trips: ${data.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error loading trips:', error);
+                }
+            }
+
+            loadTripDetails();
+
+            // Load Activities
+            async function loadActivities() {
+                try {
+                    const response = await fetch(`/trips/${tripId}/activities`);
+                    const activities = await response.json();
+
+                    if (response.ok) {
+                        activityList.innerHTML = activities.map(activity => `
+                            <li>${activity.name} - Cost: ${activity.cost}</li>
+                        `).join('');
+
+                        // Populate activity select for itinerary
+                        activitySelect.innerHTML = activities.map(activity => `
+                            <option value="${activity.activity_id}">${activity.name}</option>
+                        `).join('');
+                    } else {
+                        activityList.innerHTML = `<p>Failed to load activities: ${activities.message}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error loading activities:', error);
+                    activityList.innerHTML = '<p>Error loading activities.</p>';
+                }
+            }
+
+            loadActivities();
+
+            // Load Itinerary
+            async function loadItinerary() {
+                try {
+                    const response = await fetch(`/trips/${tripId}/itinerary`);
+                    const itinerary = await response.json();
+
+                    if (response.ok) {
+                        itineraryList.innerHTML = itinerary.map(item => `
+                            <li>${item.activity_name} - Date: ${item.date}, Time: ${item.time}</li>
+                        `).join('');
+                    } else {
+                        itineraryList.innerHTML = `<p>Failed to load itinerary: ${itinerary.message}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error loading itinerary:', error);
+                    itineraryList.innerHTML = '<p>Error loading itinerary.</p>';
+                }
+            }
+
+            loadItinerary();
+
+            // Load Budget
+            async function loadBudget() {
+                try {
+                    const response = await fetch(`/trips/${tripId}/budget`);
+                    const budget = await response.json();
+
+                    if (response.ok) {
+                        totalBudgetSpan.innerHTML = budget.total_budget;
+                        budgetBalanceSpan.innerHTML = budget.balance;
+                    } else {
+                        totalBudgetSpan.innerHTML = 'N/A';
+                        budgetBalanceSpan.innerHTML = 'N/A';
+                    }
+                } catch (error) {
+                    console.error('Error loading budget:', error);
+                    totalBudgetSpan.innerHTML = 'N/A';
+                    budgetBalanceSpan.innerHTML = 'N/A';
+                }
+            }
+
+            loadBudget();
+
+            // Load Expenses
+            async function loadExpenses() {
+                try {
+                    const response = await fetch(`/budget/${tripId}/expenses`);
+                    const expenses = await response.json();
+
+                    if (response.ok) {
+                        expensesList.innerHTML = expenses.map(expense => `
+                            <li>${expense.description} - Amount: ${expense.amount}</li>
+                        `).join('');
+                    } else {
+                        expensesList.innerHTML = `<p>Failed to load expenses: ${expenses.message}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error loading expenses:', error);
+                    expensesList.innerHTML = '<p>Error loading expenses.</p>';
+                }
+            }
+
+            loadExpenses();
+
+            // Load Voting Options
+            async function loadVotingOptions() {
+                try {
+                    const response = await fetch(`/trips/${tripId}/voting`);
+                    const votingOptions = await response.json();
+
+                    if (response.ok) {
+                        votingList.innerHTML = votingOptions.map(option => `
+                            <li>${option.option_type}: ${option.option_value}</li>
+                        `).join('');
+                    } else {
+                        votingList.innerHTML = `<p>Failed to load voting options: ${votingOptions.message}</p>`;
+                    }
+                } catch (error) {
+                    console.error('Error loading voting options:', error);
+                    votingList.innerHTML = '<p>Error loading voting options.</p>';
+                }
+            }
+
+            loadVotingOptions();
+
+            // Event Listener for Add Activity Form
+            document.getElementById('addActivityForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const activityName = document.getElementById('activityName').value;
+                const activityCost = document.getElementById('activityCost').value;
+
+                if (activityName && activityCost) {
+                    try {
+                        const response = await fetch(`/trips/${tripId}/activities`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                name: activityName,
+                                cost: activityCost,
+                                suggested_by: userId
+                            }),
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert(data.message);
+                            loadActivities(); // Reload activities after creating a new one
+                        } else {
+                            alert(`Failed to create activity: ${data.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error creating activity:', error);
+                        alert('Error creating activity.');
+                    }
+                } else {
+                    alert('Please fill in all the fields.');
+                }
+            });
+
+            // Event Listener for Set Budget Form
+            document.getElementById('setBudgetForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const totalBudget = document.getElementById('totalBudgetInput').value;
+
+                if (totalBudget) {
+                    try {
+                        const response = await fetch(`/trips/${tripId}/budget`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                total_budget: totalBudget
+                            }),
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert(data.message);
+                            loadBudget(); // Reload budget after setting
+                        } else {
+                            alert(`Failed to set budget: ${data.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error setting budget:', error);
+                        alert('Error setting budget.');
+                    }
+                } else {
+                    alert('Please enter the total budget.');
+                }
+            });
+
+            // Event Listener for Add Expense Form
+            document.getElementById('addExpenseForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const expenseAmount = document.getElementById('expenseAmount').value;
+                const expenseDescription = document.getElementById('expenseDescription').value;
+
+                if (expenseAmount && expenseDescription) {
+                    try {
+                        const response = await fetch(`/budget/${tripId}/expenses`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                user_id: userId,
+                                amount: expenseAmount,
+                                description: expenseDescription
+                            }),
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert(data.message);
+                            loadExpenses(); // Reload expenses after adding
+                            loadBudget(); // Reload budget to update balance
+                        } else {
+                            alert(`Failed to add expense: ${data.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error adding expense:', error);
+                        alert('Error adding expense.');
+                    }
+                } else {
+                    alert('Please fill in all the fields.');
+                }
+            });
+
+            // Event Listener for Add to Itinerary Form
+            document.getElementById('addItineraryForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const activityId = document.getElementById('activitySelect').value;
+                const itineraryDate = document.getElementById('itineraryDate').value;
+                const itineraryTime = document.getElementById('itineraryTime').value;
+
+                if (activityId && itineraryDate && itineraryTime) {
+                    try {
+                        const response = await fetch(`/trips/${tripId}/itinerary`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                activityId: activityId,
+                                date: itineraryDate,
+                                time: itineraryTime
+                            }),
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert(data.message);
+                            loadItinerary(); // Reload itinerary after adding
+                        } else {
+                            alert(`Failed to add to itinerary: ${data.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error adding to itinerary:', error);
+                        alert('Error adding to itinerary.');
+                    }
+                } else {
+                    alert('Please fill in all the fields.');
+                }
+            });
+
+            // Event Listener for Add Voting Option Form
+            document.getElementById('addVotingForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const optionType = document.getElementById('optionType').value;
+                const optionValue = document.getElementById('optionValue').value;
+
+                if (optionType && optionValue) {
+                    try {
+                        const response = await fetch(`/trips/${tripId}/voting`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                option_type: optionType,
+                                option_value: optionValue
+                            }),
+                        });
+
+                        const data = await response.json();
+                        if (response.ok) {
+                            alert(data.message);
+                            loadVotingOptions(); // Reload voting options after adding
+                        } else {
+                            alert(`Failed to add voting option: ${data.message}`);
+                        }
+                    } catch (error) {
+                        console.error('Error adding voting option:', error);
+                        alert('Error adding voting option.');
+                    }
+                } else {
+                    alert('Please fill in all the fields.');
+                }
+            });
+
+            // Event Listener for Back to Group
+            backToGroupBtn.addEventListener('click', () => {
+                window.location.href = `/group.html?groupId=${groupId}`;
+            });
+        });
+    </script>
+</body>
+
+</html>

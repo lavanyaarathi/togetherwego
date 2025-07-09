@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TogetherWeGo - Group Travel Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>TogetherWeGo - Group Travel Planner</h1>
+        <nav>
+            <button id="loginBtn">Login</button>
+            <button id="signupBtn">Sign Up</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboard">
+            <h2>Welcome to TogetherWeGo!</h2>
+            <p>Please log in or sign up to start planning your group trips.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TogetherWeGo</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+
+            if (loginBtn) {
+                loginBtn.addEventListener('click', () => {
+                    window.location.href = '/login.html';
+                });
+            }
+
+            if (signupBtn) {
+                signupBtn.addEventListener('click', () => {
+                    window.location.href = '/signup.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
