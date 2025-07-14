@@ -4,44 +4,265 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TogetherWeGo - Group Travel Planner</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+   <link href="style.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <h1>TogetherWeGo - Group Travel Planner</h1>
-        <nav>
-            <button id="loginBtn">Login</button>
-            <button id="signupBtn">Sign Up</button>
-        </nav>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <i class="fas fa-plane"></i>
+                TogetherWeGo
+            </a>
+            <div class="nav-buttons">
+                <button class="btn btn-ghost" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+                <button class="btn btn-secondary" id="signupBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Sign Up
+                </button>
+            </div>
+        </div>
     </header>
 
+    <!-- Main Content -->
     <main>
-        <section id="dashboard">
-            <h2>Welcome to TogetherWeGo!</h2>
-            <p>Please log in or sign up to start planning your group trips.</p>
+        <!-- Hero Section -->
+        <section class="hero fade-in-up">
+            <h1>Plan Amazing Trips Together</h1>
+            <p>Organize group travels, manage budgets, and create unforgettable memories with your friends and family.</p>
+            <button class="btn btn-primary pulse" id="getStartedBtn">
+                <i class="fas fa-rocket"></i>
+                Get Started
+            </button>
         </section>
+
+        <!-- Features Grid -->
+        <div class="dashboard-grid">
+            <div class="stats-card fade-in-up">
+                <i class="fas fa-users"></i>
+                <h3>Group Planning</h3>
+                <p>Create and manage travel groups with ease</p>
+            </div>
+            <div class="stats-card fade-in-up">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Trip Management</h3>
+                <p>Organize destinations, dates, and activities</p>
+            </div>
+            <div class="stats-card fade-in-up">
+                <i class="fas fa-calculator"></i>
+                <h3>Budget Tracking</h3>
+                <p>Keep track of expenses and split costs fairly</p>
+            </div>
+        </div>
+
+        <!-- Sample Groups -->
+        <div class="card fade-in-up">
+            <h2>
+                <i class="fas fa-users"></i>
+                Sample Travel Groups
+            </h2>
+            <div class="list-container">
+                <div class="list-item">
+                    <h4>Beach Lovers Paradise</h4>
+                    <p>Planning a trip to Bali • 6 members • Next month</p>
+                </div>
+                <div class="list-item">
+                    <h4>Mountain Adventurers</h4>
+                    <p>Himalayan trek expedition • 8 members • This summer</p>
+                </div>
+                <div class="list-item">
+                    <h4>City Explorers</h4>
+                    <p>European city tour • 4 members • Planning phase</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Trips -->
+        <div class="card fade-in-up">
+            <h2>
+                <i class="fas fa-suitcase"></i>
+                Popular Destinations
+            </h2>
+            <div class="list-container">
+                <div class="list-item">
+                    <h4>Tokyo, Japan</h4>
+                    <p>7 days • Cultural experience • ₹1,20,000 per person</p>
+                </div>
+                <div class="list-item">
+                    <h4>Switzerland</h4>
+                    <p>10 days • Alpine adventure • ₹2,50,000 per person</p>
+                </div>
+                <div class="list-item">
+                    <h4>Goa, India</h4>
+                    <p>5 days • Beach relaxation • ₹25,000 per person</p>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 TogetherWeGo</p>
-    </footer>
+    <!-- Floating Action Button -->
+    <button class="fab" id="fabBtn" title="Quick Action">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Modal for Quick Actions -->
+    <div class="modal-overlay" id="quickActionModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Quick Actions</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">
+                    <i class="fas fa-users"></i>
+                    Create New Group
+                </button>
+                <button class="btn btn-secondary" style="width: 100%; margin-bottom: 1rem;">
+                    <i class="fas fa-plane"></i>
+                    Plan New Trip
+                </button>
+                <button class="btn btn-ghost" style="width: 100%;">
+                    <i class="fas fa-search"></i>
+                    Browse Destinations
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <script>
+        // Enhanced JavaScript for better interactivity
         document.addEventListener('DOMContentLoaded', () => {
-            const loginBtn = document.getElementById('loginBtn');
-            const signupBtn = document.getElementById('signupBtn');
+            // Modal functionality
+            const fabBtn = document.getElementById('fabBtn');
+            const quickActionModal = document.getElementById('quickActionModal');
+            const closeModal = document.getElementById('closeModal');
 
-            if (loginBtn) {
-                loginBtn.addEventListener('click', () => {
-                    window.location.href = '/login.html';
-                });
+            fabBtn.addEventListener('click', () => {
+                quickActionModal.classList.add('active');
+            });
+
+            closeModal.addEventListener('click', () => {
+                quickActionModal.classList.remove('active');
+            });
+
+            quickActionModal.addEventListener('click', (e) => {
+                if (e.target === quickActionModal) {
+                    quickActionModal.classList.remove('active');
+                }
+            });
+
+            // Navigation
+            document.getElementById('loginBtn').addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
+
+            document.getElementById('signupBtn').addEventListener('click', () => {
+                window.location.href = 'signup.html';
+            });
+
+            document.getElementById('getStartedBtn').addEventListener('click', () => {
+                window.location.href = 'signup.html';
+            });
+
+            // Toast notification function
+            function showToast(message, type = 'success') {
+                const toastContainer = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Show toast
+                setTimeout(() => toast.classList.add('show'), 100);
+                
+                // Hide toast after 4 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300);
+                }, 4000);
             }
 
-            if (signupBtn) {
-                signupBtn.addEventListener('click', () => {
-                    window.location.href = '/signup.html';
+            // Add subtle animations to cards
+            const cards = document.querySelectorAll('.card, .stats-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
                 });
-            }
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Add click effects to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255, 255, 255, 0.5);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        transform: scale(0);
+                        animation: ripple 0.6s ease-out;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // Add ripple animation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+                .btn {
+                    position: relative;
+                    overflow: hidden;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Show welcome toast
+            setTimeout(() => {
+                showToast('Welcome to TogetherWeGo! Start planning your dream trip today.', 'success');
+            }, 1000);
         });
     </script>
 </body>

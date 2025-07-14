@@ -3,35 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Group Travel Planner</title>
+    <title>Login - TogetherWeGo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Login</h1>
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-plane"></i>
+                TogetherWeGo
+            </a>
+            <div class="nav-buttons">
+                <a href="signup.html" class="btn btn-secondary">
+                    <i class="fas fa-user-plus"></i>
+                    Sign Up
+                </a>
+            </div>
+        </div>
     </header>
 
     <main>
-        <section id="loginForm">
-            <h2>Login</h2>
-            <form id="login-form">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required><br><br>
+        <div class="form-container">
+            <div class="card fade-in-up">
+                <h2>
+                    <i class="fas fa-sign-in-alt"></i>
+                    Welcome Back
+                </h2>
+                <p style="color: #64748b; margin-bottom: 2rem;">Sign in to continue planning your amazing trips</p>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input type="email" id="email" name="email" class="form-input" required placeholder="Enter your email">
+                    </div>
 
-                <button type="submit">Login</button>
-            </form>
-        </section>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                        <div class="loading" id="loginLoading" style="display: none;"></div>
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 2rem; color: #64748b;">
+                    Don't have an account? 
+                    <a href="signup.html" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">
+                        Sign up here
+                    </a>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 TogetherWeGo</p>
-    </footer>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <script>
+        // Toast notification function
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('login-form').addEventListener('submit', async (e) => {
+            const loginForm = document.getElementById('login-form');
+            const loginLoading = document.getElementById('loginLoading');
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            const submitText = submitBtn.querySelector('span');
+
+            loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const email = document.getElementById('email').value;
+
+                // Show loading state
+                loginLoading.style.display = 'inline-block';
+                submitText.style.display = 'none';
+                submitBtn.disabled = true;
 
                 try {
                     const response = await fetch('/login', {
@@ -39,23 +103,30 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ email }), // Only sending email for simplified login
+                        body: JSON.stringify({ email }),
                     });
 
                     const data = await response.json();
+                    
                     if (response.ok) {
-                        alert(data.message);
-                        // Store the user ID in localStorage
-                        localStorage.setItem('user_id', data.user.user_id);
-
-                        // Redirect to the dashboard
-                        window.location.href = '/dashboard.html';
+                        showToast('Login successful! Redirecting...', 'success');
+                        // Store user data in memory instead of localStorage
+                        window.userData = { user_id: data.user.user_id };
+                        
+                        setTimeout(() => {
+                            window.location.href = '/dashboard.html';
+                        }, 1500);
                     } else {
-                        alert(`Login failed: ${data.message}`);
+                        showToast(`Login failed: ${data.message}`, 'error');
                     }
                 } catch (error) {
                     console.error('Error during login:', error);
-                    alert('Error during login.');
+                    showToast('Network error. Please try again.', 'error');
+                } finally {
+                    // Reset loading state
+                    loginLoading.style.display = 'none';
+                    submitText.style.display = 'inline';
+                    submitBtn.disabled = false;
                 }
             });
         });
