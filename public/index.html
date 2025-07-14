@@ -105,58 +105,6 @@
                 </div>
             </div>
         </div>
-        
-       
-    
-    
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <a href="#" class="logo" onclick="showHomePage()">
-                <i class="fas fa-plane"></i>
-                TogetherWeGo
-            </a>
-            <div class="nav-buttons">
-                <button class="btn btn-primary" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Login
-                </button>
-                <button class="btn btn-secondary" id="signupBtn">
-                    <i class="fas fa-user-plus"></i>
-                    Sign Up
-                </button>
-            </div>
-        </div>
-
-        <!-- Home Page -->
-        <div id="homePage" class="page-content">
-            <div class="hero">
-                <h1>Plan Amazing Trips Together</h1>
-                <p>Organize group travels, manage budgets, and create unforgettable memories with your friends and family.</p>
-                <button class="btn btn-primary" id="getStartedBtn">
-                    <i class="fas fa-rocket"></i>
-                    Get Started
-                </button>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="stats-card">
-                    <i class="fas fa-users"></i>
-                    <h3>Group Planning</h3>
-                    <p>Create and manage travel groups with ease</p>
-                </div>
-                <div class="stats-card">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <h3>Trip Management</h3>
-                    <p>Organize destinations, dates, and activities</p>
-                </div>
-                <div class="stats-card">
-                    <i class="fas fa-calculator"></i>
-                    <h3>Budget Tracking</h3>
-                    <p>Keep track of expenses and split costs fairly</p>
-                </div>
-            </div>
-        </div>
 
         <!-- Login Page -->
         <div id="loginPage" class="page-content hidden">
@@ -284,96 +232,7 @@
                 </button>
             </div>
         </div>
-
-        <!-- Group Details Page -->
-        <div id="groupDetailsPage" class="page-content hidden">
-            <div class="card">
-                <h2 id="groupName">Group Name</h2>
-                <p id="groupDescription">Group description</p>
-                <div style="margin: 20px 0;">
-                    <span class="badge badge-primary" id="memberCount">0 members</span>
-                </div>
-                <button class="btn btn-outline" onclick="showDashboard()">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to Dashboard
-                </button>
-            </div>
-
-            <div class="card">
-                <h3>Group Trips</h3>
-                <div id="groupTripsList">
-                    <!-- Group trips will be loaded here -->
-                </div>
-                <button class="btn btn-primary" onclick="showCreateTripModal()">
-                    <i class="fas fa-plus"></i>
-                    Create New Trip
-                </button>
-            </div>
-        </div>
-
-        <!-- Trip Details Page -->
-        <div id="tripDetailsPage" class="page-content hidden">
-            <div class="card">
-                <h2 id="tripName">Trip Name</h2>
-                <p><strong>Destination:</strong> <span id="tripDestination"></span></p>
-                <p><strong>Dates:</strong> <span id="tripDates"></span></p>
-                <p><strong>Budget:</strong> <span id="tripBudget">₹0</span></p>
-                <div style="margin: 20px 0;">
-                    <span class="badge badge-success" id="tripStatus">Active</span>
-                </div>
-                <button class="btn btn-outline" onclick="showDashboard()">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to Dashboard
-                </button>
-            </div>
-
-            <div class="card">
-                <div class="tabs">
-                    <button class="tab active" onclick="showTab('activities')">Activities</button>
-                    <button class="tab" onclick="showTab('budget')">Budget</button>
-                    <button class="tab" onclick="showTab('members')">Members</button>
-                </div>
-
-                <div id="activities-tab" class="tab-content active">
-                    <h3>Activities</h3>
-                    <div id="activitiesList">
-                        <!-- Activities will be loaded here -->
-                    </div>
-                    <button class="btn btn-primary" onclick="showAddActivityModal()">
-                        <i class="fas fa-plus"></i>
-                        Add Activity
-                    </button>
-                </div>
-
-                <div id="budget-tab" class="tab-content">
-                    <h3>Budget Management</h3>
-                    <div id="budgetInfo">
-                        <p><strong>Total Budget:</strong> <span id="totalBudgetAmount">₹0</span></p>
-                        <p><strong>Spent:</strong> <span id="spentAmount">₹0</span></p>
-                        <p><strong>Remaining:</strong> <span id="remainingAmount">₹0</span></p>
-                    </div>
-                    <div id="expensesList">
-                        <!-- Expenses will be loaded here -->
-                    </div>
-                    <button class="btn btn-primary" onclick="showAddExpenseModal()">
-                        <i class="fas fa-plus"></i>
-                        Add Expense
-                    </button>
-                </div>
-
-                <div id="members-tab" class="tab-content">
-                    <h3>Trip Members</h3>
-                    <div id="membersList">
-                        <!-- Members will be loaded here -->
-                    </div>
-                    <button class="btn btn-primary" onclick="showInviteMemberModal()">
-                        <i class="fas fa-user-plus"></i>
-                        Invite Member
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <!-- Floating Action Button -->
     <button class="fab" id="fabBtn" onclick="showQuickActionModal()">
@@ -465,7 +324,7 @@
                     <div class="form-group">
                         <label for="tripGroupSelect">Select Group</label>
                         <select id="tripGroupSelect" class="form-input">
-                            <option value="">Select a group</option>
+                            <option value="">Select a group (optional)</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 100%;">
@@ -477,67 +336,12 @@
         </div>
     </div>
 
-    <!-- Add Activity Modal -->
-    <div class="modal-overlay" id="addActivityModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Add Activity</h3>
-                <button class="modal-close" onclick="closeModal('addActivityModal')">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="addActivityForm">
-                    <div class="form-group">
-                        <label for="activityNameInput">Activity Name</label>
-                        <input type="text" id="activityNameInput" class="form-input" required placeholder="Enter activity name">
-                    </div>
-                    <div class="form-group">
-                        <label for="activityCostInput">Estimated Cost (₹)</label>
-                        <input type="number" id="activityCostInput" class="form-input" required placeholder="Enter estimated cost">
-                    </div>
-                    <div class="form-group">
-                        <label for="activityDescInput">Description</label>
-                        <input type="text" id="activityDescInput" class="form-input" placeholder="Enter activity description">
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-plus"></i>
-                        Add Activity
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Expense Modal -->
-    <div class="modal-overlay" id="addExpenseModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Add Expense</h3>
-                <button class="modal-close" onclick="closeModal('addExpenseModal')">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="addExpenseForm">
-                    <div class="form-group">
-                        <label for="expenseAmountInput">Amount (₹)</label>
-                        <input type="number" id="expenseAmountInput" class="form-input" required placeholder="Enter amount">
-                    </div>
-                    <div class="form-group">
-                        <label for="expenseDescInput">Description</label>
-                        <input type="text" id="expenseDescInput" class="form-input" required placeholder="Enter expense description">
-                    </div>
-                    <div class="form-group">
-                        <label for="expenseCategoryInput">Category</label>
-                        <select id="expenseCategoryInput" class="form-input">
-                            <option value="transportation">Transportation</option>
-                            <option value="accommodation">Accommodation</option>
-                            <option value="food">Food & Dining</option>
-                            <option value="activities">Activities</option>
-                            <option value="other">Other</option>
-                        </select>
     <script>
+        // Global variables for in-memory storage
+        let userData = null;
+        let userGroups = [];
+        let userTrips = [];
+
         // Page navigation functions
         function showHomePage() {
             hideAllPages();
@@ -561,6 +365,7 @@
             hideAllPages();
             document.getElementById('dashboardPage').classList.remove('hidden');
             updateNavButtons(true);
+            loadDashboardData();
         }
 
         function hideAllPages() {
@@ -586,8 +391,9 @@
         }
 
         function logout() {
-            // Clear user data
-            window.userData = null;
+            userData = null;
+            userGroups = [];
+            userTrips = [];
             showHomePage();
         }
 
@@ -596,43 +402,103 @@
             document.getElementById('quickActionModal').classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('quickActionModal').classList.remove('active');
+        function showCreateGroupModal() {
+            closeModal('quickActionModal');
+            document.getElementById('createGroupModal').classList.add('active');
         }
 
-        function createNewGroup() {
-            alert('Create New Group functionality would be implemented here');
-            closeModal();
+        function showCreateTripModal() {
+            closeModal('quickActionModal');
+            loadGroupsForTripCreation();
+            document.getElementById('createTripModal').classList.add('active');
         }
 
-        function planNewTrip() {
-            alert('Plan New Trip functionality would be implemented here');
-            closeModal();
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Load dashboard data
+        function loadDashboardData() {
+            loadGroups();
+            loadTrips();
+            updateDashboardStats();
+        }
+
+        // Load groups for trip creation
+        function loadGroupsForTripCreation() {
+            const groupSelect = document.getElementById('tripGroupSelect');
+            groupSelect.innerHTML = '<option value="">Select a group (optional)</option>';
+            
+            userGroups.forEach(group => {
+                const option = document.createElement('option');
+                option.value = group.id;
+                option.textContent = group.name;
+                groupSelect.appendChild(option);
+            });
+        }
+
+        // Load groups
+        function loadGroups() {
+            const groupsList = document.getElementById('groupsList');
+            
+            if (userGroups.length === 0) {
+                groupsList.innerHTML = '<p>No groups found. Create your first group to get started!</p>';
+                return;
+            }
+
+            groupsList.innerHTML = userGroups.map(group => `
+                <div class="list-item">
+                    <h4>${group.name}</h4>
+                    <p>${group.description || 'No description'}</p>
+                    <small>Created: ${group.created_at}</small>
+                </div>
+            `).join('');
+        }
+
+        // Load trips
+        function loadTrips() {
+            const tripsList = document.getElementById('tripsList');
+            
+            if (userTrips.length === 0) {
+                tripsList.innerHTML = '<p>No trips found. Plan your first trip to get started!</p>';
+                return;
+            }
+
+            tripsList.innerHTML = userTrips.map(trip => `
+                <div class="list-item">
+                    <h4>${trip.name}</h4>
+                    <p><strong>Destination:</strong> ${trip.destination}</p>
+                    <p><strong>Dates:</strong> ${trip.start_date} - ${trip.end_date}</p>
+                    <p><strong>Budget:</strong> ₹${trip.budget || 'Not set'}</p>
+                    <small>Created: ${trip.created_at}</small>
+                </div>
+            `).join('');
+        }
+
+        // Update dashboard stats
+        function updateDashboardStats() {
+            document.getElementById('groupCount').textContent = userGroups.length;
+            document.getElementById('tripCount').textContent = userTrips.length;
+            
+            const totalBudget = userTrips.reduce((sum, trip) => sum + (trip.budget || 0), 0);
+            document.getElementById('totalBudget').textContent = `₹${totalBudget.toLocaleString()}`;
         }
 
         // Initialize the page when DOM is fully loaded
         document.addEventListener('DOMContentLoaded', () => {
-            // Set up event listeners
-            
-            // Login button - remove the duplicate event listener and rely on updateNavButtons
-            // The login button onclick is set in updateNavButtons function
+            // Get started button event
+            document.getElementById('getStartedBtn').addEventListener('click', showSignupPage);
             
             // Signup button event
             document.getElementById('signupBtn').addEventListener('click', showSignupPage);
             
-            // Get started button event
-            document.getElementById('getStartedBtn').addEventListener('click', showSignupPage);
-            
             // FAB button event
             document.getElementById('fabBtn').addEventListener('click', showQuickActionModal);
             
-            // Close modal button event
-            document.getElementById('closeModal').addEventListener('click', closeModal);
-            
             // Close modal when clicking outside
-            document.getElementById('quickActionModal').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('quickActionModal')) {
-                    closeModal();
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal-overlay')) {
+                    e.target.classList.remove('active');
                 }
             });
             
@@ -640,7 +506,6 @@
             document.getElementById('login-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
                 
                 const loginLoading = document.getElementById('loginLoading');
                 const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -652,11 +517,38 @@
                 submitBtn.disabled = true;
                 
                 try {
-                    // Simulate API call (replace with actual API call)
+                    // Simulate API call
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     
                     // Store user data in memory
-                    window.userData = { user_id: 'user123', email: email };
+                    userData = { 
+                        user_id: 'user_' + Date.now(), 
+                        email: email,
+                        name: email.split('@')[0]
+                    };
+                    
+                    // Initialize with sample data
+                    userGroups = [
+                        {
+                            id: 'group_1',
+                            name: 'Beach Lovers',
+                            description: 'Planning beach trips',
+                            created_at: new Date().toLocaleDateString()
+                        }
+                    ];
+                    
+                    userTrips = [
+                        {
+                            id: 'trip_1',
+                            name: 'Goa Trip',
+                            destination: 'Goa, India',
+                            start_date: '2025-08-15',
+                            end_date: '2025-08-20',
+                            budget: 25000,
+                            group_id: 'group_1',
+                            created_at: new Date().toLocaleDateString()
+                        }
+                    ];
                     
                     // Show success message
                     alert('Login successful!');
@@ -680,7 +572,6 @@
                 e.preventDefault();
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('signup-email').value;
-                const password = document.getElementById('signup-password').value;
                 
                 const signupLoading = document.getElementById('signupLoading');
                 const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -692,11 +583,19 @@
                 submitBtn.disabled = true;
                 
                 try {
-                    // Simulate API call (replace with actual API call)
+                    // Simulate API call
                     await new Promise(resolve => setTimeout(resolve, 1000));
                     
                     // Store user data in memory
-                    window.userData = { user_id: 'user123', email: email, name: name };
+                    userData = { 
+                        user_id: 'user_' + Date.now(), 
+                        email: email, 
+                        name: name 
+                    };
+                    
+                    // Initialize empty arrays for new user
+                    userGroups = [];
+                    userTrips = [];
                     
                     // Show success message
                     alert('Account created successfully!');
@@ -712,6 +611,104 @@
                     signupLoading.style.display = 'none';
                     submitText.style.display = 'inline';
                     submitBtn.disabled = false;
+                }
+            });
+
+            // Create Group form submission
+            document.getElementById('createGroupForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const groupName = document.getElementById('groupNameInput').value;
+                const groupDesc = document.getElementById('groupDescInput').value;
+                
+                if (!userData) {
+                    alert('Please login first');
+                    return;
+                }
+                
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    // Create new group
+                    const newGroup = {
+                        id: 'group_' + Date.now(),
+                        name: groupName,
+                        description: groupDesc,
+                        created_at: new Date().toLocaleDateString(),
+                        user_id: userData.user_id
+                    };
+                    
+                    userGroups.push(newGroup);
+                    
+                    // Show success message
+                    alert('Group created successfully!');
+                    
+                    // Close modal and refresh dashboard
+                    closeModal('createGroupModal');
+                    loadDashboardData();
+                    
+                    // Reset form
+                    document.getElementById('createGroupForm').reset();
+                    
+                } catch (error) {
+                    console.error('Error creating group:', error);
+                    alert('Failed to create group. Please try again.');
+                }
+            });
+
+            // Create Trip form submission
+            document.getElementById('createTripForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const tripName = document.getElementById('tripNameInput').value;
+                const destination = document.getElementById('tripDestinationInput').value;
+                const startDate = document.getElementById('tripStartDate').value;
+                const endDate = document.getElementById('tripEndDate').value;
+                const budget = document.getElementById('tripBudgetInput').value;
+                const groupId = document.getElementById('tripGroupSelect').value;
+                
+                if (!userData) {
+                    alert('Please login first');
+                    return;
+                }
+                
+                // Validate dates
+                if (new Date(startDate) >= new Date(endDate)) {
+                    alert('End date must be after start date');
+                    return;
+                }
+                
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    // Create new trip
+                    const newTrip = {
+                        id: 'trip_' + Date.now(),
+                        name: tripName,
+                        destination: destination,
+                        start_date: startDate,
+                        end_date: endDate,
+                        budget: budget ? parseInt(budget) : null,
+                        group_id: groupId || null,
+                        user_id: userData.user_id,
+                        created_at: new Date().toLocaleDateString()
+                    };
+                    
+                    userTrips.push(newTrip);
+                    
+                    // Show success message
+                    alert('Trip created successfully!');
+                    
+                    // Close modal and refresh dashboard
+                    closeModal('createTripModal');
+                    loadDashboardData();
+                    
+                    // Reset form
+                    document.getElementById('createTripForm').reset();
+                    
+                } catch (error) {
+                    console.error('Error creating trip:', error);
+                    alert('Failed to create trip. Please try again.');
                 }
             });
             
