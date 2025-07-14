@@ -105,97 +105,124 @@
                 </div>
             </div>
         </div>
-        <div id="loginPage" class="page-content hidden">
-            <div class="form-container">
-                <div class="card">
-                    <h2>
-                        <i class="fas fa-sign-in-alt"></i>
-                        Welcome Back
-                    </h2>
-                    <p style="color: #64748b; margin-bottom: 2rem;">Sign in to continue planning your amazing trips</p>
-                    <form id="login-form">
-                        <div class="form-group">
-                            <label for="email">
-                                <i class="fas fa-envelope"></i>
-                                Email Address
-                            </label>
-                            <input type="email" id="email" name="email" class="form-input" required placeholder="Enter your email">
-                        </div>
-                    
-                        <div class="form-group">
-                            <label for="password">
-                                <i class="fas fa-lock"></i>
-                                Password
-                            </label>
-                            <input type="password" id="password" name="password" class="form-input" required placeholder="Enter your password">
-                        </div>
-                    
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            <i class="fas fa-sign-in-alt"></i>
-                            <span>Sign In</span>
-                            <div class="loading" id="loginLoading" style="display: none;"></div>
-                        </button>
-                    </form>
-                    
+        
+       
+    
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <a href="#" class="logo" onclick="showHomePage()">
+                <i class="fas fa-plane"></i>
+                TogetherWeGo
+            </a>
+            <div class="nav-buttons">
+                <button class="btn btn-primary" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+                <button class="btn btn-secondary" id="signupBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Sign Up
+                </button>
+            </div>
+        </div>
 
-                    <div style="text-align: center; margin-top: 2rem; color: #64748b;">
-                        Don't have an account? 
-                        <a href="#" style="color: var(--primary-color); text-decoration: none; font-weight: 600;" onclick="showSignupPage()">
-                            Sign up here
-                        </a>
+        <!-- Home Page -->
+        <div id="homePage" class="page-content">
+            <div class="hero">
+                <h1>Plan Amazing Trips Together</h1>
+                <p>Organize group travels, manage budgets, and create unforgettable memories with your friends and family.</p>
+                <button class="btn btn-primary" id="getStartedBtn">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="stats-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Group Planning</h3>
+                    <p>Create and manage travel groups with ease</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Trip Management</h3>
+                    <p>Organize destinations, dates, and activities</p>
+                </div>
+                <div class="stats-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Budget Tracking</h3>
+                    <p>Keep track of expenses and split costs fairly</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Page -->
+        <div id="loginPage" class="page-content hidden">
+            <div class="card">
+                <h2>
+                    <i class="fas fa-sign-in-alt"></i>
+                    Welcome Back
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Sign in to continue planning your amazing trips</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input type="email" id="email" name="email" class="form-input" required placeholder="Enter your email">
                     </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                        <div class="loading" id="loginLoading" style="display: none;"></div>
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">
+                    Don't have an account? 
+                    <a href="#" style="color: var(--primary-color); text-decoration: none; font-weight: 600;" onclick="showSignupPage()">
+                        Sign up here
+                    </a>
                 </div>
             </div>
         </div>
 
         <!-- Signup Page -->
         <div id="signupPage" class="page-content hidden">
-            <div class="form-container">
-                <div class="card">
-                    <h2>
-                        <i class="fas fa-user-plus"></i>
-                        Create Account
-                    </h2>
-                    <p style="color: #64748b; margin-bottom: 2rem;">Join TogetherWeGo and start planning amazing trips with your friends</p>
-                    
-                    <form id="signup-form">
-                        <div class="form-group">
-                            <label for="name">
-                                <i class="fas fa-user"></i>
-                                Full Name
-                            </label>
-                            <input type="text" id="name" name="name" class="form-input" required placeholder="Enter your full name">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="signup-email">
-                                <i class="fas fa-envelope"></i>
-                                Email Address
-                            </label>
-                            <input type="email" id="signup-email" name="email" class="form-input" required placeholder="Enter your email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="signup-password">
-                                <i class="fas fa-lock"></i>
-                                Password
-                            </label>
-                            <input type="password" id="signup-password" name="password" class="form-input" required placeholder="Create a secure password">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            <i class="fas fa-user-plus"></i>
-                            <span>Create Account</span>
-                            <div class="loading" id="signupLoading" style="display: none;"></div>
-                        </button>
-                    </form>
-
-                    <div style="text-align: center; margin-top: 2rem; color: #64748b;">
-                        Already have an account? 
-                        <a href="#" style="color: var(--primary-color); text-decoration: none; font-weight: 600;" onclick="showLoginPage()">
-                            Sign in here
-                        </a>
+            <div class="card">
+                <h2>
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">Join TogetherWeGo and start planning amazing trips</p>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="name">
+                            <i class="fas fa-user"></i>
+                            Full Name
+                        </label>
+                        <input type="text" id="name" name="name" class="form-input" required placeholder="Enter your full name">
                     </div>
+                    <div class="form-group">
+                        <label for="signup-email">
+                            <i class="fas fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input type="email" id="signup-email" name="email" class="form-input" required placeholder="Enter your email">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Create Account</span>
+                        <div class="loading" id="signupLoading" style="display: none;"></div>
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 2rem; color: var(--text-secondary);">
+                    Already have an account? 
+                    <a href="#" style="color: var(--primary-color); text-decoration: none; font-weight: 600;" onclick="showLoginPage()">
+                        Sign in here
+                    </a>
                 </div>
             </div>
         </div>
@@ -203,264 +230,494 @@
         <!-- Dashboard Page -->
         <div id="dashboardPage" class="page-content hidden">
             <div class="hero">
-                <h1>Welcome to Your Dashboard</h1>
+                <h1>Welcome Back!</h1>
                 <p>Manage your trips, groups, and travel plans all in one place.</p>
                 <button class="btn btn-primary" onclick="showQuickActionModal()">
                     <i class="fas fa-plus"></i>
-                    Create New Trip
+                    Quick Actions
                 </button>
             </div>
 
             <div class="dashboard-grid">
                 <div class="stats-card">
                     <i class="fas fa-users"></i>
-                    <h3>3</h3>
+                    <h3 id="groupCount">0</h3>
                     <p>Active Groups</p>
                 </div>
                 <div class="stats-card">
                     <i class="fas fa-map-marked-alt"></i>
-                    <h3>5</h3>
+                    <h3 id="tripCount">0</h3>
                     <p>Planned Trips</p>
                 </div>
                 <div class="stats-card">
                     <i class="fas fa-dollar-sign"></i>
-                    <h3>₹45,000</h3>
+                    <h3 id="totalBudget">₹0</h3>
                     <p>Total Budget</p>
                 </div>
             </div>
 
             <div class="card">
                 <h2>
-                    <i class="fas fa-clock"></i>
-                    Recent Activity
+                    <i class="fas fa-users"></i>
+                    My Groups
                 </h2>
-                <div class="list-container">
-                    <div class="list-item">
-                        <h4>Trip to Goa updated</h4>
-                        <p>Budget increased to ₹25,000 • 2 hours ago</p>
+                <div id="groupsList">
+                    <!-- Groups will be loaded here -->
+                </div>
+                <button class="btn btn-primary" onclick="showCreateGroupModal()">
+                    <i class="fas fa-plus"></i>
+                    Create New Group
+                </button>
+            </div>
+
+            <div class="card">
+                <h2>
+                    <i class="fas fa-suitcase"></i>
+                    My Trips
+                </h2>
+                <div id="tripsList">
+                    <!-- Trips will be loaded here -->
+                </div>
+                <button class="btn btn-secondary" onclick="showCreateTripModal()">
+                    <i class="fas fa-plus"></i>
+                    Plan New Trip
+                </button>
+            </div>
+        </div>
+
+        <!-- Group Details Page -->
+        <div id="groupDetailsPage" class="page-content hidden">
+            <div class="card">
+                <h2 id="groupName">Group Name</h2>
+                <p id="groupDescription">Group description</p>
+                <div style="margin: 20px 0;">
+                    <span class="badge badge-primary" id="memberCount">0 members</span>
+                </div>
+                <button class="btn btn-outline" onclick="showDashboard()">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Group Trips</h3>
+                <div id="groupTripsList">
+                    <!-- Group trips will be loaded here -->
+                </div>
+                <button class="btn btn-primary" onclick="showCreateTripModal()">
+                    <i class="fas fa-plus"></i>
+                    Create New Trip
+                </button>
+            </div>
+        </div>
+
+        <!-- Trip Details Page -->
+        <div id="tripDetailsPage" class="page-content hidden">
+            <div class="card">
+                <h2 id="tripName">Trip Name</h2>
+                <p><strong>Destination:</strong> <span id="tripDestination"></span></p>
+                <p><strong>Dates:</strong> <span id="tripDates"></span></p>
+                <p><strong>Budget:</strong> <span id="tripBudget">₹0</span></p>
+                <div style="margin: 20px 0;">
+                    <span class="badge badge-success" id="tripStatus">Active</span>
+                </div>
+                <button class="btn btn-outline" onclick="showDashboard()">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="tabs">
+                    <button class="tab active" onclick="showTab('activities')">Activities</button>
+                    <button class="tab" onclick="showTab('budget')">Budget</button>
+                    <button class="tab" onclick="showTab('members')">Members</button>
+                </div>
+
+                <div id="activities-tab" class="tab-content active">
+                    <h3>Activities</h3>
+                    <div id="activitiesList">
+                        <!-- Activities will be loaded here -->
                     </div>
-                    <div class="list-item">
-                        <h4>New member joined Tokyo trip</h4>
-                        <p>Sarah joined the group • 1 day ago</p>
+                    <button class="btn btn-primary" onclick="showAddActivityModal()">
+                        <i class="fas fa-plus"></i>
+                        Add Activity
+                    </button>
+                </div>
+
+                <div id="budget-tab" class="tab-content">
+                    <h3>Budget Management</h3>
+                    <div id="budgetInfo">
+                        <p><strong>Total Budget:</strong> <span id="totalBudgetAmount">₹0</span></p>
+                        <p><strong>Spent:</strong> <span id="spentAmount">₹0</span></p>
+                        <p><strong>Remaining:</strong> <span id="remainingAmount">₹0</span></p>
                     </div>
-                    <div class="list-item">
-                        <h4>Switzerland itinerary approved</h4>
-                        <p>All members approved the 10-day plan • 2 days ago</p>
+                    <div id="expensesList">
+                        <!-- Expenses will be loaded here -->
                     </div>
+                    <button class="btn btn-primary" onclick="showAddExpenseModal()">
+                        <i class="fas fa-plus"></i>
+                        Add Expense
+                    </button>
+                </div>
+
+                <div id="members-tab" class="tab-content">
+                    <h3>Trip Members</h3>
+                    <div id="membersList">
+                        <!-- Members will be loaded here -->
+                    </div>
+                    <button class="btn btn-primary" onclick="showInviteMemberModal()">
+                        <i class="fas fa-user-plus"></i>
+                        Invite Member
+                    </button>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <!-- Floating Action Button -->
-    <button class="fab" id="fabBtn" title="Quick Action">
+    <button class="fab" id="fabBtn" onclick="showQuickActionModal()">
         <i class="fas fa-plus"></i>
     </button>
 
-    <!-- Modal for Quick Actions -->
+    <!-- Modals -->
+    <!-- Quick Action Modal -->
     <div class="modal-overlay" id="quickActionModal">
         <div class="modal">
             <div class="modal-header">
                 <h3>Quick Actions</h3>
-                <button class="modal-close" id="closeModal">
+                <button class="modal-close" onclick="closeModal('quickActionModal')">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="createNewGroup()">
+                <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="showCreateGroupModal()">
                     <i class="fas fa-users"></i>
                     Create New Group
                 </button>
-                <button class="btn btn-secondary" style="width: 100%; margin-bottom: 1rem;" onclick="planNewTrip()">
+                <button class="btn btn-secondary" style="width: 100%;" onclick="showCreateTripModal()">
                     <i class="fas fa-plane"></i>
                     Plan New Trip
                 </button>
-               </div>
-               </div>
-               </div>
-               <script>
-                // Add this script tag before the closing </body> tag in your index.html
+            </div>
+        </div>
+    </div>
 
-// Page navigation functions
-function showHomePage() {
-    hideAllPages();
-    document.getElementById('homePage').classList.remove('hidden');
-    updateNavButtons(false);
-}
+    <!-- Create Group Modal -->
+    <div class="modal-overlay" id="createGroupModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Create New Group</h3>
+                <button class="modal-close" onclick="closeModal('createGroupModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createGroupForm">
+                    <div class="form-group">
+                        <label for="groupNameInput">Group Name</label>
+                        <input type="text" id="groupNameInput" class="form-input" required placeholder="Enter group name">
+                    </div>
+                    <div class="form-group">
+                        <label for="groupDescInput">Description</label>
+                        <input type="text" id="groupDescInput" class="form-input" placeholder="Enter group description">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-plus"></i>
+                        Create Group
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-function showLoginPage() {
-    hideAllPages();
-    document.getElementById('loginPage').classList.remove('hidden');
-    updateNavButtons(true);
-}
+    <!-- Create Trip Modal -->
+    <div class="modal-overlay" id="createTripModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Plan New Trip</h3>
+                <button class="modal-close" onclick="closeModal('createTripModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createTripForm">
+                    <div class="form-group">
+                        <label for="tripNameInput">Trip Name</label>
+                        <input type="text" id="tripNameInput" class="form-input" required placeholder="Enter trip name">
+                    </div>
+                    <div class="form-group">
+                        <label for="tripDestinationInput">Destination</label>
+                        <input type="text" id="tripDestinationInput" class="form-input" required placeholder="Enter destination">
+                    </div>
+                    <div class="form-group">
+                        <label for="tripStartDate">Start Date</label>
+                        <input type="date" id="tripStartDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tripEndDate">End Date</label>
+                        <input type="date" id="tripEndDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tripBudgetInput">Budget (₹)</label>
+                        <input type="number" id="tripBudgetInput" class="form-input" placeholder="Enter budget">
+                    </div>
+                    <div class="form-group">
+                        <label for="tripGroupSelect">Select Group</label>
+                        <select id="tripGroupSelect" class="form-input">
+                            <option value="">Select a group</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-plane"></i>
+                        Create Trip
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-function showSignupPage() {
-    hideAllPages();
-    document.getElementById('signupPage').classList.remove('hidden');
-    updateNavButtons(true);
-}
+    <!-- Add Activity Modal -->
+    <div class="modal-overlay" id="addActivityModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add Activity</h3>
+                <button class="modal-close" onclick="closeModal('addActivityModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addActivityForm">
+                    <div class="form-group">
+                        <label for="activityNameInput">Activity Name</label>
+                        <input type="text" id="activityNameInput" class="form-input" required placeholder="Enter activity name">
+                    </div>
+                    <div class="form-group">
+                        <label for="activityCostInput">Estimated Cost (₹)</label>
+                        <input type="number" id="activityCostInput" class="form-input" required placeholder="Enter estimated cost">
+                    </div>
+                    <div class="form-group">
+                        <label for="activityDescInput">Description</label>
+                        <input type="text" id="activityDescInput" class="form-input" placeholder="Enter activity description">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-plus"></i>
+                        Add Activity
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-function showDashboardPage() {
-    hideAllPages();
-    document.getElementById('dashboardPage').classList.remove('hidden');
-    updateNavButtons(true);
-}
+    <!-- Add Expense Modal -->
+    <div class="modal-overlay" id="addExpenseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add Expense</h3>
+                <button class="modal-close" onclick="closeModal('addExpenseModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addExpenseForm">
+                    <div class="form-group">
+                        <label for="expenseAmountInput">Amount (₹)</label>
+                        <input type="number" id="expenseAmountInput" class="form-input" required placeholder="Enter amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseDescInput">Description</label>
+                        <input type="text" id="expenseDescInput" class="form-input" required placeholder="Enter expense description">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseCategoryInput">Category</label>
+                        <select id="expenseCategoryInput" class="form-input">
+                            <option value="transportation">Transportation</option>
+                            <option value="accommodation">Accommodation</option>
+                            <option value="food">Food & Dining</option>
+                            <option value="activities">Activities</option>
+                            <option value="other">Other</option>
+                        </select>
+    <script>
+        // Page navigation functions
+        function showHomePage() {
+            hideAllPages();
+            document.getElementById('homePage').classList.remove('hidden');
+            updateNavButtons(false);
+        }
 
-function hideAllPages() {
-    const pages = document.querySelectorAll('.page-content');
-    pages.forEach(page => {
-        page.classList.add('hidden');
-    });
-}
+        function showLoginPage() {
+            hideAllPages();
+            document.getElementById('loginPage').classList.remove('hidden');
+            updateNavButtons(true);
+        }
 
-function updateNavButtons(isLoggedIn) {
-    const loginBtn = document.getElementById('loginBtn');
-    const signupBtn = document.getElementById('signupBtn');
-    
-    if (isLoggedIn) {
-        loginBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
-        loginBtn.onclick = logout;
-        signupBtn.style.display = 'none';
-    } else {
-        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-        loginBtn.onclick = showLoginPage;
-        signupBtn.style.display = 'inline-flex';
-    }
-}
+        function showSignupPage() {
+            hideAllPages();
+            document.getElementById('signupPage').classList.remove('hidden');
+            updateNavButtons(true);
+        }
 
-function logout() {
-    // Clear user data
-    window.userData = null;
-    showHomePage();
-}
+        function showDashboardPage() {
+            hideAllPages();
+            document.getElementById('dashboardPage').classList.remove('hidden');
+            updateNavButtons(true);
+        }
 
-// Modal functions
-function showQuickActionModal() {
-    document.getElementById('quickActionModal').classList.add('active');
-}
+        function hideAllPages() {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+        }
 
-function closeModal() {
-    document.getElementById('quickActionModal').classList.remove('active');
-}
+        function updateNavButtons(isLoggedIn) {
+            const loginBtn = document.getElementById('loginBtn');
+            const signupBtn = document.getElementById('signupBtn');
+            
+            if (isLoggedIn) {
+                loginBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+                loginBtn.onclick = logout;
+                signupBtn.style.display = 'none';
+            } else {
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                loginBtn.onclick = showLoginPage;
+                signupBtn.style.display = 'inline-flex';
+            }
+        }
 
-function createNewGroup() {
-    alert('Create New Group functionality would be implemented here');
-    closeModal();
-}
+        function logout() {
+            // Clear user data
+            window.userData = null;
+            showHomePage();
+        }
 
-function planNewTrip() {
-    alert('Plan New Trip functionality would be implemented here');
-    closeModal();
-}
+        // Modal functions
+        function showQuickActionModal() {
+            document.getElementById('quickActionModal').classList.add('active');
+        }
 
-// Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    // Login button event
-    document.getElementById('loginBtn').addEventListener('click', showLoginPage);
-    
-    // Signup button event
-    document.getElementById('signupBtn').addEventListener('click', showSignupPage);
-    
-    // Get started button event
-    document.getElementById('getStartedBtn').addEventListener('click', showSignupPage);
-    
-    // FAB button event
-    document.getElementById('fabBtn').addEventListener('click', showQuickActionModal);
-    
-    // Close modal button event
-    document.getElementById('closeModal').addEventListener('click', closeModal);
-    
-    // Close modal when clicking outside
-    document.getElementById('quickActionModal').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('quickActionModal')) {
+        function closeModal() {
+            document.getElementById('quickActionModal').classList.remove('active');
+        }
+
+        function createNewGroup() {
+            alert('Create New Group functionality would be implemented here');
             closeModal();
         }
-    });
-    
-    // Login form submission
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        
-        const loginLoading = document.getElementById('loginLoading');
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const submitText = submitBtn.querySelector('span');
-        
-        // Show loading state
-        loginLoading.style.display = 'inline-block';
-        submitText.style.display = 'none';
-        submitBtn.disabled = true;
-        
-        try {
-            // Simulate API call (replace with actual API call)
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Store user data in memory
-            window.userData = { user_id: 'user123', email: email };
-            
-            // Show success message
-            alert('Login successful!');
-            
-            // Navigate to dashboard
-            showDashboardPage();
-            
-        } catch (error) {
-            console.error('Error during login:', error);
-            alert('Login failed. Please try again.');
-        } finally {
-            // Reset loading state
-            loginLoading.style.display = 'none';
-            submitText.style.display = 'inline';
-            submitBtn.disabled = false;
-        }
-    });
-    
-    // Signup form submission
-    document.getElementById('signup-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('signup-email').value;
-        const password = document.getElementById('signup-password').value;
-        
-        const signupLoading = document.getElementById('signupLoading');
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const submitText = submitBtn.querySelector('span');
-        
-        // Show loading state
-        signupLoading.style.display = 'inline-block';
-        submitText.style.display = 'none';
-        submitBtn.disabled = true;
-        
-        try {
-            // Simulate API call (replace with actual API call)
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Store user data in memory
-            window.userData = { user_id: 'user123', email: email, name: name };
-            
-            // Show success message
-            alert('Account created successfully!');
-            
-            // Navigate to dashboard
-            showDashboardPage();
-            
-        } catch (error) {
-            console.error('Error during signup:', error);
-            alert('Signup failed. Please try again.');
-        } finally {
-            // Reset loading state
-            signupLoading.style.display = 'none';
-            submitText.style.display = 'inline';
-            submitBtn.disabled = false;
-        }
-    });
-});
 
-// Initialize the page
-window.addEventListener('load', () => {
-    showHomePage();
-});
-               </script>
-               </body>
-               </html>
+        function planNewTrip() {
+            alert('Plan New Trip functionality would be implemented here');
+            closeModal();
+        }
+
+        // Initialize the page when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set up event listeners
+            
+            // Login button - remove the duplicate event listener and rely on updateNavButtons
+            // The login button onclick is set in updateNavButtons function
+            
+            // Signup button event
+            document.getElementById('signupBtn').addEventListener('click', showSignupPage);
+            
+            // Get started button event
+            document.getElementById('getStartedBtn').addEventListener('click', showSignupPage);
+            
+            // FAB button event
+            document.getElementById('fabBtn').addEventListener('click', showQuickActionModal);
+            
+            // Close modal button event
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            document.getElementById('quickActionModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('quickActionModal')) {
+                    closeModal();
+                }
+            });
+            
+            // Login form submission
+            document.getElementById('login-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                const loginLoading = document.getElementById('loginLoading');
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const submitText = submitBtn.querySelector('span');
+                
+                // Show loading state
+                loginLoading.style.display = 'inline-block';
+                submitText.style.display = 'none';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Simulate API call (replace with actual API call)
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // Store user data in memory
+                    window.userData = { user_id: 'user123', email: email };
+                    
+                    // Show success message
+                    alert('Login successful!');
+                    
+                    // Navigate to dashboard
+                    showDashboardPage();
+                    
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    alert('Login failed. Please try again.');
+                } finally {
+                    // Reset loading state
+                    loginLoading.style.display = 'none';
+                    submitText.style.display = 'inline';
+                    submitBtn.disabled = false;
+                }
+            });
+            
+            // Signup form submission
+            document.getElementById('signup-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                
+                const signupLoading = document.getElementById('signupLoading');
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const submitText = submitBtn.querySelector('span');
+                
+                // Show loading state
+                signupLoading.style.display = 'inline-block';
+                submitText.style.display = 'none';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Simulate API call (replace with actual API call)
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    // Store user data in memory
+                    window.userData = { user_id: 'user123', email: email, name: name };
+                    
+                    // Show success message
+                    alert('Account created successfully!');
+                    
+                    // Navigate to dashboard
+                    showDashboardPage();
+                    
+                } catch (error) {
+                    console.error('Error during signup:', error);
+                    alert('Signup failed. Please try again.');
+                } finally {
+                    // Reset loading state
+                    signupLoading.style.display = 'none';
+                    submitText.style.display = 'inline';
+                    submitBtn.disabled = false;
+                }
+            });
+            
+            // Initialize the page
+            showHomePage();
+        });
+    </script>
+</body>
+</html>
