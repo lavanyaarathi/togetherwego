@@ -36,131 +36,9 @@ async function initializeDatabase() {
 
         console.log("MySQL connection established successfully.");
 
-        // Create database if it doesn't exist
-        await connection.query(`CREATE DATABASE IF NOT EXISTS ${dbConfig.database}`);
         await connection.query(`USE ${dbConfig.database}`);
 
-        console.log(`Database '${dbConfig.database}' is ready.`);
-
-        // Create Users table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS Users (
-                user_id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                role ENUM('member', 'admin') DEFAULT 'member',
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        // Create Groups table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS \`Groups\` (
-                group_id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                organizer_id INT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (organizer_id) REFERENCES Users(user_id) ON DELETE CASCADE
-            )
-        `);
-
-        // Create User_Group junction table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS User_Group (
-                user_id INT,
-                group_id INT,
-                joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                PRIMARY KEY (user_id, group_id),
-                FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-                FOREIGN KEY (group_id) REFERENCES \`Groups\`(group_id) ON DELETE CASCADE
-            )
-        `);
-
-        // Create Trips table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS Trips (
-                trip_id INT AUTO_INCREMENT PRIMARY KEY,
-                group_id INT NOT NULL,
-                destination VARCHAR(255) NOT NULL,
-                start_date DATE,
-                end_date DATE,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (group_id) REFERENCES \`Groups\`(group_id) ON DELETE CASCADE
-            )
-        `);
-
-        // Create Activities table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS Activities (
-                activity_id INT AUTO_INCREMENT PRIMARY KEY,
-                trip_id INT NOT NULL,
-                name VARCHAR(255) NOT NULL,
-                cost DECIMAL(10, 2) DEFAULT 0,
-                suggested_by INT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (trip_id) REFERENCES Trips(trip_id) ON DELETE CASCADE,
-                FOREIGN KEY (suggested_by) REFERENCES Users(user_id) ON DELETE SET NULL
-            )
-        `);
-
-        // Create Budget table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS Budget (
-                budget_id INT AUTO_INCREMENT PRIMARY KEY,
-                trip_id INT NOT NULL,
-                total_budget DECIMAL(10, 2) NOT NULL,
-                expenses DECIMAL(10, 2) DEFAULT 0,
-                balance DECIMAL(10, 2) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (trip_id) REFERENCES Trips(trip_id) ON DELETE CASCADE
-            )
-        `);
-
-        // Create Expenses table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS Expenses (
-                expense_id INT AUTO_INCREMENT PRIMARY KEY,
-                budget_id INT,
-                trip_id INT,
-                user_id INT NOT NULL,
-                amount DECIMAL(10, 2) NOT NULL,
-                description TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (budget_id) REFERENCES Budget(budget_id) ON DELETE CASCADE,
-                FOREIGN KEY (trip_id) REFERENCES Trips(trip_id) ON DELETE CASCADE,
-                FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
-            )
-        `);
-
-        // Create Itinerary table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS Itinerary (
-                itinerary_id INT AUTO_INCREMENT PRIMARY KEY,
-                trip_id INT NOT NULL,
-                activity_id INT NOT NULL,
-                date DATE NOT NULL,
-                time TIME NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (trip_id) REFERENCES Trips(trip_id) ON DELETE CASCADE,
-                FOREIGN KEY (activity_id) REFERENCES Activities(activity_id) ON DELETE CASCADE
-            )
-        `);
-
-        // Create Voting table if it doesn't exist
-        await connection.query(`
-            CREATE TABLE IF NOT EXISTS Voting (
-                voting_id INT AUTO_INCREMENT PRIMARY KEY,
-                trip_id INT NOT NULL,
-                option_type VARCHAR(100) NOT NULL,
-                option_value TEXT NOT NULL,
-                votes INT DEFAULT 0,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (trip_id) REFERENCES Trips(trip_id) ON DELETE CASCADE
-            )
-        `);
-
-        console.log('All database tables created successfully.');
+        console.log('Database exists');
 
     } catch (error) {
         console.error('Database initialization error:', {
@@ -171,12 +49,9 @@ async function initializeDatabase() {
             sqlState: error.sqlState
         });
         throw error;
-    } finally {
-        if (connection) {
-            await connection.end();
-        }
     }
 }
+
 initializeDatabase();
 
 app.use((req, res, next) => {
