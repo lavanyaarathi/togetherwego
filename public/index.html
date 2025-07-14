@@ -113,7 +113,6 @@
                         Welcome Back
                     </h2>
                     <p style="color: #64748b; margin-bottom: 2rem;">Sign in to continue planning your amazing trips</p>
-                    
                     <form id="login-form">
                         <div class="form-group">
                             <label for="email">
@@ -122,7 +121,7 @@
                             </label>
                             <input type="email" id="email" name="email" class="form-input" required placeholder="Enter your email">
                         </div>
-
+                    
                         <div class="form-group">
                             <label for="password">
                                 <i class="fas fa-lock"></i>
@@ -130,13 +129,14 @@
                             </label>
                             <input type="password" id="password" name="password" class="form-input" required placeholder="Enter your password">
                         </div>
-
+                    
                         <button type="submit" class="btn btn-primary" style="width: 100%;">
                             <i class="fas fa-sign-in-alt"></i>
                             <span>Sign In</span>
                             <div class="loading" id="loginLoading" style="display: none;"></div>
                         </button>
                     </form>
+                    
 
                     <div style="text-align: center; margin-top: 2rem; color: #64748b;">
                         Don't have an account? 
@@ -278,5 +278,189 @@
                </div>
                </div>
                </div>
+               <script>
+                // Add this script tag before the closing </body> tag in your index.html
+
+// Page navigation functions
+function showHomePage() {
+    hideAllPages();
+    document.getElementById('homePage').classList.remove('hidden');
+    updateNavButtons(false);
+}
+
+function showLoginPage() {
+    hideAllPages();
+    document.getElementById('loginPage').classList.remove('hidden');
+    updateNavButtons(true);
+}
+
+function showSignupPage() {
+    hideAllPages();
+    document.getElementById('signupPage').classList.remove('hidden');
+    updateNavButtons(true);
+}
+
+function showDashboardPage() {
+    hideAllPages();
+    document.getElementById('dashboardPage').classList.remove('hidden');
+    updateNavButtons(true);
+}
+
+function hideAllPages() {
+    const pages = document.querySelectorAll('.page-content');
+    pages.forEach(page => {
+        page.classList.add('hidden');
+    });
+}
+
+function updateNavButtons(isLoggedIn) {
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    
+    if (isLoggedIn) {
+        loginBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+        loginBtn.onclick = logout;
+        signupBtn.style.display = 'none';
+    } else {
+        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+        loginBtn.onclick = showLoginPage;
+        signupBtn.style.display = 'inline-flex';
+    }
+}
+
+function logout() {
+    // Clear user data
+    window.userData = null;
+    showHomePage();
+}
+
+// Modal functions
+function showQuickActionModal() {
+    document.getElementById('quickActionModal').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('quickActionModal').classList.remove('active');
+}
+
+function createNewGroup() {
+    alert('Create New Group functionality would be implemented here');
+    closeModal();
+}
+
+function planNewTrip() {
+    alert('Plan New Trip functionality would be implemented here');
+    closeModal();
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Login button event
+    document.getElementById('loginBtn').addEventListener('click', showLoginPage);
+    
+    // Signup button event
+    document.getElementById('signupBtn').addEventListener('click', showSignupPage);
+    
+    // Get started button event
+    document.getElementById('getStartedBtn').addEventListener('click', showSignupPage);
+    
+    // FAB button event
+    document.getElementById('fabBtn').addEventListener('click', showQuickActionModal);
+    
+    // Close modal button event
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    
+    // Close modal when clicking outside
+    document.getElementById('quickActionModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('quickActionModal')) {
+            closeModal();
+        }
+    });
+    
+    // Login form submission
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        const loginLoading = document.getElementById('loginLoading');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const submitText = submitBtn.querySelector('span');
+        
+        // Show loading state
+        loginLoading.style.display = 'inline-block';
+        submitText.style.display = 'none';
+        submitBtn.disabled = true;
+        
+        try {
+            // Simulate API call (replace with actual API call)
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Store user data in memory
+            window.userData = { user_id: 'user123', email: email };
+            
+            // Show success message
+            alert('Login successful!');
+            
+            // Navigate to dashboard
+            showDashboardPage();
+            
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('Login failed. Please try again.');
+        } finally {
+            // Reset loading state
+            loginLoading.style.display = 'none';
+            submitText.style.display = 'inline';
+            submitBtn.disabled = false;
+        }
+    });
+    
+    // Signup form submission
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        
+        const signupLoading = document.getElementById('signupLoading');
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const submitText = submitBtn.querySelector('span');
+        
+        // Show loading state
+        signupLoading.style.display = 'inline-block';
+        submitText.style.display = 'none';
+        submitBtn.disabled = true;
+        
+        try {
+            // Simulate API call (replace with actual API call)
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Store user data in memory
+            window.userData = { user_id: 'user123', email: email, name: name };
+            
+            // Show success message
+            alert('Account created successfully!');
+            
+            // Navigate to dashboard
+            showDashboardPage();
+            
+        } catch (error) {
+            console.error('Error during signup:', error);
+            alert('Signup failed. Please try again.');
+        } finally {
+            // Reset loading state
+            signupLoading.style.display = 'none';
+            submitText.style.display = 'inline';
+            submitBtn.disabled = false;
+        }
+    });
+});
+
+// Initialize the page
+window.addEventListener('load', () => {
+    showHomePage();
+});
+               </script>
                </body>
                </html>
